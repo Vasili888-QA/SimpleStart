@@ -1,6 +1,7 @@
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 
 import java.time.Duration;
 
@@ -12,8 +13,10 @@ import static com.codeborne.selenide.Selenide.*;
 public class SearchTests {
     //Run on Terminal command -> gradle clean test
 
+
     @Test
     void selenideSearchTest() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
         open("https://www.google.com/");
 
         $(byName("q")).setValue("selenide").pressEnter();
@@ -23,6 +26,7 @@ public class SearchTests {
 
     @Test
     void returnToGoogleMainPage() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
         //HTML Элемент на странице -->
         // <a href="https://www.google.com/webhp?hl=ru&amp;sa=X&amp;ved=0ahUKEwiqzsTw47zyAhXm-yoKHXe9AVoQPAgI" title="Главная страница Google" id="logo" data-hveid="8">
         // варианты работы с элементом через:
