@@ -36,7 +36,7 @@ public class SearchTests {
 
         //по атрибуту
         //$(by("id","logo")).click();
-        $(by("title","Главная страница Google")).click();
+        $(by("title", "Главная страница Google")).click();
 
         //через атрибут title, если тест падает то нужно добавить кодировку UTF-8 в build.gradle
         //$(byTitle("Главная страница Google")).click();
