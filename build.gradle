@@ -25,6 +25,9 @@ allure {
 dependencies {
     testImplementation(
             'org.aspectj:aspectjweaver:1.9.7',
+            'io.cucumber:cucumber-java:6.11.0',
+            'io.cucumber:cucumber-junit:6.11.0',
+            "org.junit.vintage:junit-vintage-engine:$junitVersion",
             "com.codeborne:selenide:$selenideVersion",
             "io.qameta.allure:allure-selenide:$allureVersion",
             'io.rest-assured:rest-assured:4.4.0',
@@ -43,6 +46,22 @@ tasks.withType(JavaCompile) {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+task cucumber() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'src/test/resources']
+        }
+    }
+}
 tasks.withType(Test) {
     systemProperties(System.getProperties())
     useJUnitPlatform()
